@@ -2,6 +2,7 @@
 
 // load modules
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const { models } = require('./db');
 const bcryptjs = require('bcryptjs');
@@ -99,6 +100,8 @@ app.use(express.json());
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
 
+//CORS support cross-origin resource sharing or CORS
+app.use(cors());
 ////////API ROUTES/////////
 
 //*****USER ROUTES*******

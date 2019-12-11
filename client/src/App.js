@@ -1,4 +1,5 @@
 import React from 'react';
+import withContext from './Context';
 
 import './App.css';
 
