@@ -23,4 +23,13 @@ console.log(url, options)
   return fetch(url , options);
   
 }
+
+async getCourses () {
+  const response = await this.api('/api/courses', 'GET', null, true);
+  if(response.status === 200) {
+    return response.json().then(data => data).then(console.log(data));
+  } else {
+    throw new Error();
+  }
+}
 }

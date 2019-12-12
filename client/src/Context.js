@@ -11,16 +11,17 @@ export class Provider extends Component {
            this.data = new Data();
          }
 
-         //   state = {
-         //     authenticatedUser: Cookies.getJSON('authenticatedUser') || null
-         //   };
+           state = [];
 
          render() {
            // const { authenticatedUser } = this.state;
 
            const value = {
              //   authenticatedUser,
-             data: this.state.data
+             data: this.data, 
+             actions: {
+               getCourses: this.handleCourses
+             }
              //   actions: {
              //     signIn: this.signIn,
              //     signOut: this.signOut
@@ -33,6 +34,15 @@ export class Provider extends Component {
            );
          }
 
+         handleCourses = async () => {
+           const course = await this.data.getCourses();
+           if(course !== null) {
+             this.setState(() => {
+               return { courses}
+             })
+           }
+           return course;
+         }
          //   signIn = async (username, password) => {
          //     const user = await this.data.getUser(username, password);
          //     if (user !== null) {

@@ -20,8 +20,8 @@ class App extends Component {
       <Consumer>
         {context => (
           <React.Fragment>
-            {context.data.map((course, index) => (
-              <p {...course} key={course.id.toString()} index={index} />
+            {context.courses.map((course, index) => (
+              <p {...courses} key={course.id.toString()} index={index}>{course.title}</p> 
             ))}
           </React.Fragment>
         )}
