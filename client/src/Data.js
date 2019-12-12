@@ -19,7 +19,7 @@ api(path, method = 'GET', body = null) {
 //     );
 //     options.headers['Authorization'] = `Basic ${encodedCredentials}`;
 //   }
-
+console.log(url, options)
   return fetch(url , options);
   
 }
