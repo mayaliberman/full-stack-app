@@ -10,24 +10,19 @@ api(path, method = 'GET', body = null) {
     }
   };
 
-//   if (body !== null) {
-//     options.body = JSON.stringify(body);
-//   }
-//   if (requireAuth) {
-//     const encodedCredentials = btoa(
-//       `${credentials.username}:${credentials.password}`
-//     );
-//     options.headers['Authorization'] = `Basic ${encodedCredentials}`;
-//   }
+  if (body !== null) {
+    options.body = JSON.stringify(body);
+  }
+
 console.log(url, options)
   return fetch(url , options);
   
 }
 
 async getCourses () {
-  const response = await this.api('/api/courses', 'GET', null, true);
+  const response = await this.api('/api/courses', 'GET', null);
   if(response.status === 200) {
-    return response.json().then(data => data).then(console.log(data));
+    return response.json().then(data => data);
   } else {
     throw new Error();
   }
