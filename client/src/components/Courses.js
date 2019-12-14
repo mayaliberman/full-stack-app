@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 
 class Courses extends Component {
-    componentDidMount() {
-        const { context } = this.props;
+  componentDidMount() {
+    const { context } = this.props;
     context.data.getCourses().then(courses => {
       this.setState({ courses });
       console.log(courses);
     });
   }
   render() {
-       const { context } = this.props;
-    const { courses } = context.courses.course;
+    const { context } = this.props;
+    const courses = this.state.courses;
+
+  
     const courseList = courses.map(course => {
       return (
         <div className='grid-33'>
