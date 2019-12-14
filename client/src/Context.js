@@ -11,7 +11,7 @@ export class Provider extends Component {
     this.data = new Data();
   }
 
-  state = [];
+  state = {};
 
   render() {
     // const { authenticatedUser } = this.state;
