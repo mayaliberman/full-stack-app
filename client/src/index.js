@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { Provider } from './Context';
+import { CourseProvider } from './CourseContext';
 
 
 ReactDOM.render(
-  <Provider>
+  <CourseProvider>
     <App />
-  </Provider>,
+  </CourseProvider>,
   document.getElementById('root')
 );
 

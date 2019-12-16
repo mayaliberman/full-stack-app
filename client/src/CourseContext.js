@@ -3,12 +3,27 @@ import Data from './Data';
 // import { thisExpression } from '@babel/types';
 // import Cookies from 'js-cookie';
 
-const Context = React.createContext();
+const CourseContext = React.createContext();
 
-export class Provider extends Component {
+export class CourseProvider extends Component {
   constructor() {
     super();
     this.data = new Data();
+  }
+
+  updateCourses = () => {
+    this.getCourses()
+      .then(courses => {
+        this.setState({ courses });
+      })
+      .catch(error => {
+        //this catch method outputs a message to the console, should axios fail to retrieve data
+        console.log('Something went wrong, could not access data', error);
+      });
+  };
+
+  componentDidMount() {
+    this.updateCourses();
   }
 
   state = {};
@@ -19,20 +34,25 @@ export class Provider extends Component {
     const value = {
       //   authenticatedUser,
       data: this.data,
+      courseList: this.state.courses,
       actions: {
-        getCourses: this.handleCourses
+        getCourses: this.getCourses,
+        getOneCourse: this.getSingleCourse
       }
       //   actions: {
       //     signIn: this.signIn,
       //     signOut: this.signOut
       //   }
     };
+    console.log('value.courseList: ', value.courseList);
     return (
-      <Context.Provider value={value}>{this.props.children}</Context.Provider>
+      <CourseContext.Provider value={value}>
+        {this.props.children}
+      </CourseContext.Provider>
     );
   }
 
-  handleCourses = async () => {
+  getCourses = async () => {
     const course = await this.data.getCourses();
     if (course !== null) {
       this.setState(() => {
@@ -43,7 +63,7 @@ export class Provider extends Component {
   };
 }
 
-export const Consumer = Context.Consumer;
+export const CourseConsumer = CourseContext.Consumer;
 
 /**
  * A higher-order component that wraps the provided component in a Context Consumer component.
@@ -54,9 +74,9 @@ export const Consumer = Context.Consumer;
 export default function withContext(Component) {
   return function ContextComponent(props) {
     return (
-      <Context.Consumer>
+      <CourseContext.Consumer>
         {context => <Component {...props} context={context} />}
-      </Context.Consumer>
+      </CourseContext.Consumer>
     );
   };
 }

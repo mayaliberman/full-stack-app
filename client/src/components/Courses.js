@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
-
+import { CourseConsumer } from '../CourseContext';
 class Courses extends Component {
-  componentDidMount() {
-    const { context } = this.props;
-    context.data
-      .getCourses()
-      .then(courses => {
-        this.setState({ courses });
-        console.log(this.state, 'component');
-      })
-      .catch(error => {
-        //this catch method outputs a message to the console, should axios fail to retrieve data
-        console.log('Something went wrong, could not access data', error);
-      });
-  }
   render() {
+    let context = this.props.context;
     return (
+      // <CourseConsumer>
+      //   {context => {
+      //     console.log('courseList', context.courseList);
+      // return (
       <div className='bounds'>
-        {this.state === null ? (
-          <h1>preloading</h1>
+        {!context.courseList || !context.courseList.course ? (
+          <h1>Loading...</h1>
         ) : (
-          this.state.courses.course.map(course => {
+          context.courseList.course.map(course => {
             return (
               <div className='grid-33' key={course.id}>
                 <a
@@ -58,5 +50,9 @@ class Courses extends Component {
     );
   }
 }
+// </CourseConsumer>
+// );
+// }
+// }
 
 export default Courses;
