@@ -24,17 +24,19 @@ export class CourseProvider extends Component {
 
   componentDidMount() {
     this.updateCourses();
+   
   }
 
   state = {};
 
   render() {
-    // const { authenticatedUser } = this.state;
+   
 
     const value = {
-      //   authenticatedUser,
+     
       data: this.data,
       courseList: this.state.courses,
+      singleCourse: this.state.singleCourse,
       actions: {
         getCourses: this.getCourses,
         getOneCourse: this.getSingleCourse
@@ -51,7 +53,14 @@ export class CourseProvider extends Component {
       </CourseContext.Provider>
     );
   }
-
+getSingelCourse = async () => {
+  const singleCourse = await this.data.getSingleCourse(this.props.params);
+  if(singleCourse !== null) {
+    this.setState(() => {
+      return { singleCourse}
+    })
+  }
+}
   getCourses = async () => {
     const course = await this.data.getCourses();
     if (course !== null) {
