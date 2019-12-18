@@ -1,12 +1,28 @@
-import React from 'react';
-
-const CourseDetail = (props) => {
+import React, {Component} from 'react';
+import { Link, useParams } from 'react-router-dom';
+class CourseDetail extends Component {
+  componentDidMount () {
+    const {context} = this.props;
+    const id = this.props.match.params.id;
     
-let context = props.context.singleCourse;
-console.log(context, 'coursedetails')
-    return(
-        <div>
-        <div className="actions--bar">
+    context.data.getSingleCourse().then(singleCourse => {
+        this.setState({
+            singleCourse
+          });
+        });
+        console.log(context, 'context single course')
+      }
+      // let context = props.context.singleCourse;
+      // console.log(context, 'coursedetails')
+      render () {
+   
+      return <div>Hello single course</div>
+    }
+  }
+    // return(
+    //   <div>
+    //   {id}
+        {/* <div className="actions--bar">
           <div className="bounds">
             <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="#">Delete Course</a></span><a
                 className="button button-secondary" href="index.html">Return to List</a></div>
@@ -50,11 +66,11 @@ console.log(context, 'coursedetails')
               </ul>
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
+      // </div>
     
-    )
+    // )
 
-}
+// }
 
 export default CourseDetail;

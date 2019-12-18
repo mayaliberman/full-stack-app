@@ -27,8 +27,8 @@ export default class Data {
     }
   }
 
-  async getSingleCourse(id) {
-    const response = await this.api(`/api/courese/:${id}`, 'GET', null);
+  async getSingleCourse() {
+    const response = await this.api(`/api/courses/:id`, 'GET', null);
     if (response.status === 200) {
       return response.json().then(data => data);
     } else {

@@ -2,15 +2,23 @@ import React, { Component } from 'react';
 import NewCourseButton from './NewCourseButton';
 
 class Courses extends Component {
+  componentDidMount() {
+    const { context } = this.props;
+    context.data.getCourses().then(courses => {
+      this.setState({
+        courses
+      });
+    });
+  }
   render() {
-    let context = this.props.context;
+    
     return (
-      
       <div className='bounds'>
-        {!context.courseList || !context.courseList.course ? (
+      
+        {this.state === null ? (
           <h1>Loading...</h1>
         ) : (
-          context.courseList.course.map(course => {
+          this.state.courses.course.map(course => {
             return (
               <div className='grid-33' key={course.id}>
                 <a
@@ -24,7 +32,7 @@ class Courses extends Component {
             );
           })
         )}
-        
+
         <NewCourseButton />
       </div>
     );
