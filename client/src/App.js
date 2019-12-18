@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, useParams } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useParams
+} from 'react-router-dom';
 import NotFound from './components/NotFound';
 import Courses from './components/Courses';
 import UserSignIn from './components/UserSignIn';
@@ -19,14 +24,21 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
-            <Route exact patch='/' component={CoursesWithContext} />
+            <Route exact path='/courses/' component={CoursesWithContext} />
             <Route path='/signin' component={UserSignIn} />
             <Route path='/signup' component={UserSignUpWithContext} />
-            <Route path='/courses/:id' component={SingleCourseWithContext} />
+            <Route
+              path='/courses/:id'
+              render={props => (
+                <SingleCourseWithContext
+                  courseId={props.match.params.id}
+                  key={props.location.key}
+                />
+              )}
+            />
             <Route path='/signout' component={UserSignOut} />
             <Route component={NotFound} />
           </Switch>
-          <SingleCourseWithContext />
         </div>
       </Router>
     );

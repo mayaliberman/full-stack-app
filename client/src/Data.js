@@ -21,17 +21,20 @@ export default class Data {
   async getCourses() {
     const response = await this.api('/api/courses', 'GET', null);
     if (response.status === 200) {
-      return response.json().then(data => data);
+      return response.json();
     } else {
       throw new Error();
     }
   }
 
-  async getSingleCourse() {
-    const response = await this.api(`/api/courses/:id`, 'GET', null);
+  async getSingleCourse(id) {
+    const response = await this.api(`/api/courses/${id}`, 'GET', null);
     if (response.status === 200) {
-      return response.json().then(data => data);
+      console.log(response);
+
+      return response.json();
     } else {
+      console.error(response.status, id);
       throw new Error();
     }
   }
@@ -41,6 +44,7 @@ export default class Data {
       username,
       password
     });
+
     if (response.status === 200) {
       return response.json().then(data => data);
     } else if (response.status === 401) {

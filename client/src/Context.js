@@ -16,9 +16,9 @@ export class Provider extends Component {
   render() {
     const value = {
       data: this.data,
-      actions: {
-        getCourses: this.getCourses
-      }
+      // actions: {
+      //   getCourses: this.getCourses
+      // }
       //   actions: {
       //     signIn: this.signIn,
       //     signOut: this.signOut
@@ -29,15 +29,15 @@ export class Provider extends Component {
       <Context.Provider value={value}>{this.props.children}</Context.Provider>
     );
   }
-  handleCourses = async () => {
-    const course = await this.data.getCourses();
-    if (course !== null) {
-      this.setState(() => {
-        return { course };
-      });
-    }
-    return course;
-  };
+  // handleCourses = async () => {
+  //   const course = await this.data.getCourses();
+  //   if (course !== null) {
+  //     this.setState(() => {
+  //       return { course };
+  //     });
+  //   }
+  //   return course;
+  // };
 }
 
 export const CourseConsumer = Context.Consumer;
