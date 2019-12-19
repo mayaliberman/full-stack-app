@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useParams
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import Courses from './components/Courses';
 import UserSignIn from './components/UserSignIn';
@@ -24,16 +19,13 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
-            <Route exact path='/courses/' component={CoursesWithContext} />
+            <Route exact path='/api/courses' component={CoursesWithContext} />
             <Route path='/signin' component={UserSignIn} />
             <Route path='/signup' component={UserSignUpWithContext} />
             <Route
-              path='/courses/:id'
+              path='/api/courses/:id'
               render={props => (
-                <SingleCourseWithContext
-                  courseId={props.match.params.id}
-                  key={props.location.key}
-                />
+                <SingleCourseWithContext courseId={props.match.params.id} />
               )}
             />
             <Route path='/signout' component={UserSignOut} />
@@ -43,7 +35,6 @@ class App extends Component {
       </Router>
     );
 
-    /* render something based on the value of MyContext */
   }
 }
 
