@@ -56,12 +56,12 @@ render() {
                     onClick={() => {
                       this.handleDelete(id);
                     }}
-                    href='#'
+                    href='/api/courses'
                   >
                     Delete Course
                   </a>
                 </span>
-                <a className='button button-secondary' href='/api/courses'>
+                <a className='button button-secondary' href='/courses'>
                   Return to List
                 </a>
               </div>

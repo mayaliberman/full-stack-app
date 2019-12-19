@@ -1,7 +1,13 @@
 import config from './config';
 
 export default class Data {
-  api(path, method = 'GET', body = null) {
+  api(
+    path,
+    method = 'GET',
+    body = null,
+    requiresAuth = false,
+    credentials = null
+  ) {
     const url = config.apiBaseUrl + path;
     const options = {
       method,
@@ -14,10 +20,18 @@ export default class Data {
       options.body = JSON.stringify(body);
     }
 
-    console.log(url, options);
+    // console.log(url, options);
+
+    if (requiresAuth) {
+      const encodedCredentials = btoa(
+        `${credentials.emailAddress}:${credentials.passowrd}`
+      );
+      options.headers['Authorization'] = `Basic ${encodedCredentials}`;
+    }
+
     return fetch(url, options);
   }
-
+  
   async getCourses() {
     const response = await this.api('/api/courses', 'GET', null);
     if (response.status === 200) {
@@ -40,8 +54,8 @@ export default class Data {
   }
 
   async deleteCourse(id) {
-    const response = await this.api(`/api/courses/${id}`, 'DELETE', null) 
-    if(response.status === 204) {
+    const response = await this.api(`/api/courses/${id}`, 'DELETE', null);
+    if (response.status === 204) {
       console.log(response);
       return response.json();
     } else {
@@ -49,9 +63,9 @@ export default class Data {
     }
   }
 
-  async getUser(username, password) {
-    const response = await this.api(`/users`, 'GET', null, true, {
-      username,
+  async getUser(emailAddress, password) {
+    const response = await this.api(`/api/users`, 'GET', null, true, {
+      emailAddress,
       password
     });
 

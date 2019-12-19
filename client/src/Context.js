@@ -1,34 +1,57 @@
 import React, { Component } from 'react';
 import Data from './Data';
-// import { thisExpression } from '@babel/types';
-// import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 
 const Context = React.createContext();
 
 export class Provider extends Component {
-  constructor() {
-    super();
-    this.data = new Data();
-  }
+         constructor() {
+           super();
+           this.data = new Data();
+         }
 
-  state = {};
+         state = {
+           authenticatedUser: Cookies.getJSON('authenticatedUser') || null
+         };
 
-  render() {
-    const value = {
-      data: this.data,
-      
-      //   actions: {
-      //     signIn: this.signIn,
-      //     signOut: this.signOut
-      //   }
-    };
-    console.log('value.course: ', value.data);
-    return (
-      <Context.Provider value={value}>{this.props.children}</Context.Provider>
-    );
-  }
-  
-}
+         signIn = async (emailAddress, password) => {
+           const user = await this.data.getUser(emailAddress, password);
+           if (user !== null) {
+             this.setState(() => {
+               return { authenticatedUser: user };
+             });
+             const cookieOptions = {
+               expires: 1
+             };
+             Cookies.set('authenticatedUser', JSON.stringify(user), {
+               cookieOptions
+             });
+           }
+         };
+
+         signOut = () => {
+           this.setState({ authenticatedUser: null });
+           Cookies.remove('authenticatedUser');
+         };
+
+         render() {
+           const { authenticatedUser } = this.state;
+           const value = {
+             data: this.data,
+             authenticatedUser,
+             actions: {
+               signIn: this.signIn,
+               signOut: this.signOut
+             }
+           };
+           console.log('value.course: ', value.data);
+           return (
+             <Context.Provider value={value}>
+               {this.props.children}
+             </Context.Provider>
+           );
+         }
+       }
 
 export const CourseConsumer = Context.Consumer;
 
