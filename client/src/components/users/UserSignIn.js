@@ -22,30 +22,33 @@ class UserSignIn extends Component {
   };
 
   submit = () => {
-      const {context} = this.props;
-      const {from} = this.props.location.state || {from: { pathname: '/courses/create'}}
-      const {emailAddress, password} = this.state;
-      context.actions.signIn(emailAddress, password)
-      .then((user) => {
-        if(user === null) {
+    const { context } = this.props;
+    const { from } = this.props.location.state || {
+      from: { pathname: '/courses' }
+    };
+    const { emailAddress, password } = this.state;
+    context.actions
+      .signIn(emailAddress, password)
+      .then(user => {
+        if (user === null) {
           this.setState(() => {
-            return { errors: ['Sign-in was unsuccessful']}
-          })
+            return { errors: ['Sign-in was unsuccessful'] };
+          });
         } else {
-          this.props.history.push(from)
+          this.props.history.push(from);
         }
       })
       .catch(error => {
         console.log(error);
-        this.props.history.push('/error')
-      })
+        this.props.history.push('/error');
+      });
   };
+
+ 
 
   cancel = () => {
-      this.props.history.push('/courses')
+    this.props.history.push('/courses');
   };
-
-  
 
   render() {
     const { emailAddress, password, errors } = this.state;
@@ -72,18 +75,18 @@ class UserSignIn extends Component {
                   id='password'
                   name='password'
                   type='password'
-                  placeholder="Password"
+                  placeholder='Password'
                   value={password}
                   onChange={this.change}
                 />
               </React.Fragment>
             )}
           />
-        <p>&nbsp;</p>
-        <p>
-          Don't have a user account? <Link to='/signup'>Click here</Link> to
-          sign up!
-        </p>
+          <p>&nbsp;</p>
+          <p>
+            Don't have a user account? <Link to='/signup'>Click here</Link> to
+            sign up!
+          </p>
         </div>
       </div>
     );

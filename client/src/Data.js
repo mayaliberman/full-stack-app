@@ -20,8 +20,7 @@ export default class Data {
       options.body = JSON.stringify(body);
     }
 
-    // console.log(url, options);
-
+   
     if (requiresAuth) {
       const encodedCredentials = btoa(
         `${credentials.emailAddress}:${credentials.passowrd}`
@@ -31,7 +30,7 @@ export default class Data {
 
     return fetch(url, options);
   }
-  
+
   async getCourses() {
     const response = await this.api('/api/courses', 'GET', null);
     if (response.status === 200) {
@@ -62,15 +61,15 @@ export default class Data {
       throw new Error();
     }
   }
-
+  
   async getUser(emailAddress, password) {
     const response = await this.api(`/api/users`, 'GET', null, true, {
       emailAddress,
       password
     });
-
+    console.log(response);
     if (response.status === 200) {
-      return response.json().then(data => data);
+      return response.json();
     } else if (response.status === 401) {
       return null;
     } else {

@@ -5,53 +5,53 @@ import Cookies from 'js-cookie';
 const Context = React.createContext();
 
 export class Provider extends Component {
-         constructor() {
-           super();
-           this.data = new Data();
-         }
+  constructor() {
+    super();
+    this.data = new Data();
+  }
 
-         state = {
-           authenticatedUser: Cookies.getJSON('authenticatedUser') || null
-         };
+  state = {
+    authenticatedUser: Cookies.getJSON('authenticatedUser') || null
+  };
 
-         signIn = async (emailAddress, password) => {
-           const user = await this.data.getUser(emailAddress, password);
-           if (user !== null) {
-             this.setState(() => {
-               return { authenticatedUser: user };
-             });
-             const cookieOptions = {
-               expires: 1
-             };
-             Cookies.set('authenticatedUser', JSON.stringify(user), {
-               cookieOptions
-             });
-           }
-         };
+  signIn = async (emailAddress, password) => {
+    const user = await this.data.getUser(emailAddress, password);
+    if (user !== null) {
+      this.setState(() => {
+        return { authenticatedUser: user };
+      });
+      const cookieOptions = {
+        expires: 1
+      };
+      Cookies.set('authenticatedUser', JSON.stringify(user), {
+        cookieOptions
+      });
+    }
+    console.log(user);
+    return user;
+  };
 
-         signOut = () => {
-           this.setState({ authenticatedUser: null });
-           Cookies.remove('authenticatedUser');
-         };
+  signOut = () => {
+    this.setState({ authenticatedUser: null });
+    Cookies.remove('authenticatedUser');
+  };
 
-         render() {
-           const { authenticatedUser } = this.state;
-           const value = {
-             data: this.data,
-             authenticatedUser,
-             actions: {
-               signIn: this.signIn,
-               signOut: this.signOut
-             }
-           };
-           console.log('value.course: ', value.data);
-           return (
-             <Context.Provider value={value}>
-               {this.props.children}
-             </Context.Provider>
-           );
-         }
-       }
+  render() {
+    const { authenticatedUser } = this.state;
+    const value = {
+      data: this.data,
+      authenticatedUser,
+      actions: {
+        signIn: this.signIn,
+        signOut: this.signOut
+      }
+    };
+    console.log('value.course: ', value.data);
+    return (
+      <Context.Provider value={value}>{this.props.children}</Context.Provider>
+    );
+  }
+}
 
 export const CourseConsumer = Context.Consumer;
 
