@@ -1,9 +1,9 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom'
  const NewCourseButton = () => {
 return (
   <div className='grid-33'>
-    <a className='course--module course--add--module' href='create-course.html'>
+    <Link className='course--module course--add--module' to='/courses/create'>
       <h3 className='course--add--title'>
         <svg
           version='1.1'
@@ -17,7 +17,7 @@ return (
         </svg>
         New Course
       </h3>
-    </a>
+    </Link>
   </div>
 );
 }

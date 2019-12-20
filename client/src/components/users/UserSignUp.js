@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import Form from '../courses/Form';
+import Form from './Form';
 
 class UserSignUp extends Component {
   state = {
       firstName: '', 
       lastName: '',
-      email: '',
+      emailAddress: '',
       password: '',
       confirmPass: '', 
       errors: []
@@ -72,7 +72,7 @@ class UserSignUp extends Component {
                   <input
                     id='confirmPassword'
                     name='confirmPassword'
-                    type='password'
+                    type='text'
                     className=''
                     placeholder='Confirm Password'
                     value={confirmPass}
@@ -104,15 +104,33 @@ class UserSignUp extends Component {
   submit = () => {
       const {context} = this.props;
       const {
-          firstName, lastName, email, password, confirmPass
+          firstName, lastName, emailAddress, password, confirmPass
       } = this.state;
       const user = {
-          firstName, lastName, password, email, confirmPass
+          firstName, lastName, password, emailAddress, confirmPass
       }
+      if(emailAddress !== confirmPass) {
+        console.log('passowrd are not ok')
+      }
+      context.data
+        .createUser(user)
+        .then(errors => {
+          if (errors.length) {
+            this.setState({ errors });
+          } else {
+            console.log(
+              `${emailAddress} is successfully signed up and authenticated!`
+            );
+          }
+        })
+        .catch(err => {
+          console.log(err);
+           this.props.history.push('/error');
+        });
   }
 
   cancel = () => {
-      this.props.history.push('/');
+      this.props.history.push('/api/courses');
   }
 }
 
