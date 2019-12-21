@@ -25,20 +25,7 @@ handleDelete = () => {
   } else {
     throw new Error('user is not allowed to delete course CourseDetail Component')
   }
-  // context.data.deleteCourse(
-  //   courseId,
-  //   authenticatedUser.emailAddress,
-  //   authenticatedUser.password
-  // );
-  // const requestOptions = {
-  //   method: 'DELETE'
-  // };
-  // fetch("/api/courses/" + userId, requestOptions).then((response) => {
-  //   return response.json();
-  // }).then((result) => {
-  //   // do what you want with the response here
-  //   console.log(result, 'result')
-  // });
+  
 };
 
 render() {

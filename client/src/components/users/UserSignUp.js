@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Form from './Form';
+import ValidationForm from '../ValidationForm';
 
 class UserSignUp extends Component {
   state = {
@@ -10,6 +10,57 @@ class UserSignUp extends Component {
     password: '',
     confirmPassword: '',
     errors: []
+  };
+  change = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  };
+  submit = () => {
+    const { context } = this.props;
+    const {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+      confirmPassword
+    } = this.state;
+    console.log(password, confirmPassword);
+    const user = {
+      firstName,
+      lastName,
+      password,
+      emailAddress
+    };
+    if (password !== confirmPassword) {
+      this.setState({
+        errors: ['Your password and confirm passowrd should be the identical']
+      });
+    } else {
+      context.data
+        .createUser(user)
+        .then(errors => {
+          if (errors.length) {
+            this.setState({ errors });
+          } else {
+            context.actions.signIn(emailAddress, password).then(() => {
+              this.props.history.push('/');
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.history.push('/error');
+        });
+    }
+  };
+
+  cancel = () => {
+    this.props.history.push('/');
   };
   render() {
     const {
@@ -24,7 +75,7 @@ class UserSignUp extends Component {
       <div className='bounds'>
         <div className='grid-33 centered signin'>
           <h1>Sign Up</h1>
-          <Form
+          <ValidationForm
             cancel={this.cancel}
             errors={errors}
             submit={this.submit}
@@ -97,59 +148,6 @@ class UserSignUp extends Component {
       </div>
     );
   }
-
-  change = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState(() => {
-      return {
-        [name]: value
-      };
-    });
-  };
-  submit = () => {
-    const { context } = this.props;
-    const {
-      firstName,
-      lastName,
-      emailAddress,
-      password,
-      confirmPassword
-    } = this.state;
-    console.log(password, confirmPassword);
-    const user = {
-      firstName,
-      lastName,
-      password,
-      emailAddress
-    };
-    if (password !== confirmPassword) {
-      this.setState({
-       errors: ['You password and confirm passowrd should be the identical']
-      });
-    } else {
-      context.data.createUser(user)
-      .then(errors => {
-        if (errors.length) {
-          this.setState({ errors });
-        } else {
-          context.actions.signIn(emailAddress, password)
-          .then(() => {
-            this.props.history.push('/');
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        this.props.history.push('/error');
-      })
-    }
-    
-  };
-
-  cancel = () => {
-    this.props.history.push('/');
-  };
 }
 
 export default UserSignUp;

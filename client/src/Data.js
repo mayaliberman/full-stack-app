@@ -29,7 +29,7 @@ export default class Data {
 
     return fetch(url, options);
   }
-
+//COURSES METHODS
   async getCourses() {
     const response = await this.api('/api/courses', 'GET', null);
     if (response.status === 200) {
@@ -49,28 +49,48 @@ export default class Data {
     }
   }
 
-  async deleteCourse(id, emailAddress, password) {
-    const response = await this.api(`/api/courses/${id}`, 'DELETE', null, true, {emailAddress, password});
-    if (response.status === 204) {
-      console.log(response);
-      return null;
-    } else if(response.status === 403) {
-      console.log(response, 'user is not authorize to delete a courese')
-      return null;
-    }else {
+  async createCourse(course, emailAddress, password) {
+    const response = await this.api(`/api/courses`, 'POST', course, true, {
+      emailAddress,
+      password
+    });
+    if (response.status === 201) {
+      return [];
+    } else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    } else {
       throw new Error();
-
     }
   }
+
+  async deleteCourse(id, emailAddress, password) {
+    const response = await this.api(
+      `/api/courses/${id}`,
+      'DELETE',
+      null,
+      true,
+      { emailAddress, password }
+    );
+    if (response.status === 204) {
+      return null;
+    } else if (response.status === 403) {
+      return null;
+    } else {
+      throw new Error();
+    }
+  }
+//USER'S METHODS
 
   async getUser(emailAddress, password) {
     const response = await this.api(`/api/users`, 'GET', null, true, {
       emailAddress,
       password
     });
-    // console.log(response.json());
+
     if (response.status === 200) {
-      return response.json().then(data => data);
+      return response.json();
     } else if (response.status === 401) {
       return null;
     } else {
