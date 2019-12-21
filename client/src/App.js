@@ -4,12 +4,13 @@ import NotFound from './components/NotFound';
 import Courses from './components/courses/Courses';
 import UserSignIn from './components/users/UserSignIn';
 import UserSignOut from './components/users/UserSignOut';
+import Header from './components/Header'
 import UserSignUp from './components/users/UserSignUp';
 import CreateCourse from './components/courses/CreateCourse';
 import withContext from './Context';
 import CourseDetail from './components/courses/CouresDetail';
 import './App.css';
-
+const HeaderwithContext = withContext(Header)
 const UserSignUpWithContext = withContext(UserSignUp);
 const CoursesWithContext = withContext(Courses);
 const SingleCourseWithContext = withContext(CourseDetail);
@@ -20,6 +21,7 @@ class App extends Component {
   render() {
     return (
       <Router>
+      <HeaderwithContext />
         <div>
           <Switch>
             <Route exact path='/' component={CoursesWithContext} />
