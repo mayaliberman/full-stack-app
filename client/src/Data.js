@@ -20,10 +20,9 @@ export default class Data {
       options.body = JSON.stringify(body);
     }
 
-   
     if (requiresAuth) {
       const encodedCredentials = btoa(
-        `${credentials.emailAddress}:${credentials.passowrd}`
+        `${credentials.emailAddress}:${credentials.password}`
       );
       options.headers['Authorization'] = `Basic ${encodedCredentials}`;
     }
@@ -43,8 +42,6 @@ export default class Data {
   async getSingleCourse(id) {
     const response = await this.api(`/api/courses/${id}`, 'GET', null);
     if (response.status === 200) {
-      console.log(response);
-
       return response.json();
     } else {
       console.error(response.status, id);
@@ -52,24 +49,32 @@ export default class Data {
     }
   }
 
-  async deleteCourse(id) {
-    const response = await this.api(`/api/courses/${id}`, 'DELETE', null);
+  async deleteCourse(id, emailAddress, password) {
+    const response = await this.api(`/api/courses/${id}`, 'DELETE', null, true, {emailAddress, password});
     if (response.status === 204) {
       console.log(response);
-      return response.json();
-    } else {
+      return null;
+    } else if(response.status === 403) {
+      console.log(response, 'user is not authorize to delete a courese')
+      return null;
+    }else {
       throw new Error();
+
     }
   }
-  
+
   async getUser(emailAddress, password) {
-    const response = await this.api(`/api/users`, 'GET', null, true, {emailAddress, password});
-    console.log(response.json());
+    const response = await this.api(`/api/users`, 'GET', null, true, {
+      emailAddress,
+      password
+    });
+    // console.log(response.json());
     if (response.status === 200) {
-      return response.json();
+      return response.json().then(data => data);
     } else if (response.status === 401) {
       return null;
     } else {
+      console.log('data file get user function');
       throw new Error();
     }
   }

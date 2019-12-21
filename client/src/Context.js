@@ -17,19 +17,23 @@ export class Provider extends Component {
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
     if (user !== null) {
+      user.password = password;
+      
       this.setState(() => {
         return { authenticatedUser: user };
       });
       const cookieOptions = {
         expires: 1
       };
-      Cookies.set('authenticatedUser', JSON.stringify(user), {
+      Cookies.set('authenticatedUser', JSON.stringify(user), 
         cookieOptions
-      });
+      );
     }
-    console.log(user);
+    
     return user;
   };
+
+  
 
   signOut = () => {
     this.setState({ authenticatedUser: null });
@@ -46,7 +50,7 @@ export class Provider extends Component {
         signOut: this.signOut
       }
     };
-    console.log('value.course: ', value.data);
+    
     return (
       <Context.Provider value={value}>{this.props.children}</Context.Provider>
     );

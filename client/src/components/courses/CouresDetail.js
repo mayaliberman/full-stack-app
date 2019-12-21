@@ -8,26 +8,44 @@ class CourseDetail extends Component {
         singleCourse
       });
     });
+
+    
   }
   
 
-handleDelete = userId => {
-  const requestOptions = {
-    method: 'DELETE'
-  };
-  fetch("/api/courses/" + userId, requestOptions).then((response) => {
-    return response.json();
-  }).then((result) => {
-    // do what you want with the response here
-    console.log(result, 'result')
-  });
+handleDelete = () => {
+  
+  const {context, courseId} = this.props;
+  const {authenticatedUser} = context
+  const courseOwnerUser = this.state.singleCourse.course.User.emailAddress;
+  const signedInUserEmailAdress = authenticatedUser.emailAddress;
+  const signedInUserPassword = authenticatedUser.password;
+  if(courseOwnerUser === signedInUserEmailAdress) {
+    context.data.deleteCourse(courseId, signedInUserEmailAdress, signedInUserPassword)
+  } else {
+    throw new Error('user is not allowed to delete course CourseDetail Component')
+  }
+  // context.data.deleteCourse(
+  //   courseId,
+  //   authenticatedUser.emailAddress,
+  //   authenticatedUser.password
+  // );
+  // const requestOptions = {
+  //   method: 'DELETE'
+  // };
+  // fetch("/api/courses/" + userId, requestOptions).then((response) => {
+  //   return response.json();
+  // }).then((result) => {
+  //   // do what you want with the response here
+  //   console.log(result, 'result')
+  // });
 };
 
 render() {
-  console.log(this.state);
+  
   if (this.state) {
     const {
-      id,
+      
       title,
       description,
       estimatedTime,
@@ -54,14 +72,14 @@ render() {
                   <a
                     className='button'
                     onClick={() => {
-                      this.handleDelete(id);
+                      this.handleDelete();
                     }}
-                    href='/api/courses'
+                    href='/'
                   >
                     Delete Course
                   </a>
                 </span>
-                <a className='button button-secondary' href='/courses'>
+                <a className='button button-secondary' href='/'>
                   Return to List
                 </a>
               </div>

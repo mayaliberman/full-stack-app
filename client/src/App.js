@@ -22,7 +22,7 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
-            <Route exact path='/courses' component={CoursesWithContext} />
+            <Route exact path='/' component={CoursesWithContext} />
             <Route path='/courses/create' component={CreateCourseWithContext}/>
             <Route path='/signin' component={UserSignInWithContext} />
             <Route path='/signup' component={UserSignUpWithContext} />

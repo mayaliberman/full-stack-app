@@ -68,7 +68,7 @@ class UserSignIn extends Component {
     
     const { context } = this.props;
     const { from } = this.props.location.state || {
-      from: { pathname: '/authenticated' }
+      from: { pathname: '/' }
     };
     const { emailAddress, password } = this.state;
     context.actions
@@ -83,13 +83,13 @@ class UserSignIn extends Component {
         }
       })
       .catch(error => {
-        console.log(error);
+        
         this.props.history.push('/error');
       });
   };
 
   cancel = () => {
-    this.props.history.push('/courses');
+    this.props.history.push('/');
   };
 }
 

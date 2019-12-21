@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Form from './Form';
 
 class UserSignUp extends Component {
   state = {
-      firstName: '', 
-      lastName: '',
-      emailAddress: '',
-      password: '',
-      confirmPass: '', 
-      errors: []
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    password: '',
+    confirmPassword: '',
+    errors: []
   };
   render() {
-      const {firstName, lastName, email, password, errors, confirmPass} = this.state;
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      errors,
+      confirmPassword
+    } = this.state;
     return (
       <div className='bounds'>
         <div className='grid-33 centered signin'>
@@ -72,14 +79,13 @@ class UserSignUp extends Component {
                   <input
                     id='confirmPassword'
                     name='confirmPassword'
-                    type='text'
+                    type='password'
                     className=''
                     placeholder='Confirm Password'
-                    value={confirmPass}
+                    value={confirmPassword}
                     onChange={this.change}
                   />
                 </div>
-                
               </React.Fragment>
             )}
           />
@@ -92,46 +98,58 @@ class UserSignUp extends Component {
     );
   }
 
-  change = (event) => {
-     const name = event.target.name;
-     const value = event.target.value;
-      this.setState(() => {
-          return{
-              [name]: value
-          }
-      })
-  }
+  change = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  };
   submit = () => {
-      const {context} = this.props;
-      const {
-          firstName, lastName, emailAddress, password, confirmPass
-      } = this.state;
-      const user = {
-          firstName, lastName, password, emailAddress, confirmPass
-      }
-      if(emailAddress !== confirmPass) {
-        console.log('passowrd are not ok')
-      }
-      context.data
-        .createUser(user)
-        .then(errors => {
-          if (errors.length) {
-            this.setState({ errors });
-          } else {
-            console.log(
-              `${emailAddress} is successfully signed up and authenticated!`
-            );
-          }
-        })
-        .catch(err => {
-          console.log(err);
-           this.props.history.push('/error');
-        });
-  }
+    const { context } = this.props;
+    const {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+      confirmPassword
+    } = this.state;
+    console.log(password, confirmPassword);
+    const user = {
+      firstName,
+      lastName,
+      password,
+      emailAddress
+    };
+    if (password !== confirmPassword) {
+      this.setState({
+       errors: ['You password and confirm passowrd should be the identical']
+      });
+    } else {
+      context.data.createUser(user)
+      .then(errors => {
+        if (errors.length) {
+          this.setState({ errors });
+        } else {
+          context.actions.signIn(emailAddress, password)
+          .then(() => {
+            this.props.history.push('/');
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.props.history.push('/error');
+      })
+    }
+    
+  };
 
   cancel = () => {
-      this.props.history.push('/api/courses');
-  }
+    this.props.history.push('/');
+  };
 }
 
 export default UserSignUp;
