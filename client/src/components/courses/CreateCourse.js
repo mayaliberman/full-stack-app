@@ -17,7 +17,7 @@ class CreateCourse extends Component {
         [name]: value
       };
     });
-    console.log(this.state);
+    
   };
 
   submit = () => {
@@ -34,7 +34,7 @@ class CreateCourse extends Component {
     console.log(userId, this.state, context);
     const course = { title, description, estimatedTime, materialsNeeded, userId };
     console.log(course)
-    if (title === null || description === null) {
+    if (title === null && description === null) {
       this.setState({
         errors: ['Please add missing title and/or description']
       });

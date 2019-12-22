@@ -66,13 +66,17 @@ export default class Data {
     }
   }
 
-  async updateCourse(id, emailAddress, password) {
-    const response = await this.api(`/api/courses/${id}`, 'PUT', null, true, {
+  async updateCourse(id, emailAddress, password, course) {
+    const response = await this.api(`/api/courses/${id}`, 'PUT', course, true, {
       emailAddress,
       password
     });
     if(response.status === 204) {
-      return [];
+      return response.json().then(data => {
+        console.log(data);
+        return data.errors;
+      })
+     
     } else if(response.status === 403) {
       return null
     } else {

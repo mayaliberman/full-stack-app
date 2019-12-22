@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 
 const Form = (props) => {
     const {cancel, errors, submit, submitButtonText, elements} = props;
