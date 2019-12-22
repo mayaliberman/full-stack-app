@@ -29,7 +29,7 @@ export default class Data {
 
     return fetch(url, options);
   }
-//COURSES METHODS
+  //COURSES METHODS
   async getCourses() {
     const response = await this.api('/api/courses', 'GET', null);
     if (response.status === 200) {
@@ -58,10 +58,25 @@ export default class Data {
       return [];
     } else if (response.status === 400) {
       return response.json().then(data => {
+        console.log(data);
         return data.errors;
       });
     } else {
       throw new Error();
+    }
+  }
+
+  async updateCourse(id, emailAddress, password) {
+    const response = await this.api(`/api/courses/${id}`, 'PUT', null, true, {
+      emailAddress,
+      password
+    });
+    if(response.status === 204) {
+      return [];
+    } else if(response.status === 403) {
+      return null
+    } else {
+      throw new Error ()
     }
   }
 
@@ -81,7 +96,7 @@ export default class Data {
       throw new Error();
     }
   }
-//USER'S METHODS
+  //USER'S METHODS
 
   async getUser(emailAddress, password) {
     const response = await this.api(`/api/users`, 'GET', null, true, {
@@ -94,7 +109,7 @@ export default class Data {
     } else if (response.status === 401) {
       return null;
     } else {
-      console.log('data file get user function');
+      
       throw new Error();
     }
   }

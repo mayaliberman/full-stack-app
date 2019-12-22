@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {Link} from 'react-router-dom';
 class CourseDetail extends Component {
   componentDidMount() {
     const { context, courseId } = this.props;
@@ -32,7 +32,7 @@ render() {
   
   if (this.state) {
     const {
-      
+      id,
       title,
       description,
       estimatedTime,
@@ -53,9 +53,9 @@ render() {
             <div className='bounds'>
               <div className='grid-100'>
                 <span>
-                  <a className='button' href='update-course.html'>
+                  <Link className='button' to={`/courses/${id}/update`}>
                     Update Course
-                  </a>
+                  </Link>
                   <a
                     className='button'
                     onClick={() => {
@@ -66,9 +66,9 @@ render() {
                     Delete Course
                   </a>
                 </span>
-                <a className='button button-secondary' href='/'>
+                <Link className='button button-secondary' to='/'>
                   Return to List
-                </a>
+                </Link>
               </div>
             </div>
           </div>

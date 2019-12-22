@@ -10,7 +10,9 @@ class Header extends Component {
     return (
       <div className='header'>
         <div className='bounds'>
-          <h1 className='header--logo'>Courses</h1>
+          <Link to='/'>
+            <h1 className='header--logo'>Courses</h1>
+          </Link>
 
           {this.props.context.authenticatedUser === null ? (
             <nav>
@@ -24,7 +26,8 @@ class Header extends Component {
           ) : (
             <nav>
               <span>
-                Welcome {this.props.context.authenticatedUser.firstName} {this.props.context.authenticatedUser.lastName}
+                Welcome {this.props.context.authenticatedUser.firstName}{' '}
+                {this.props.context.authenticatedUser.lastName}
               </span>
               <Link className='signout' to='/'>
                 Sign Out

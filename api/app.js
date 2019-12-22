@@ -112,7 +112,8 @@ app.get('/api/users', authenicateUser, (req, res) => {
   res.status(200).json({
     firstName: user.firstName,
     lastName: user.lastName,
-    emailAddress: user.emailAddress
+    emailAddress: user.emailAddress, 
+    id: user.id
   });
 });
 
@@ -193,7 +194,7 @@ app.get(
   })
 );
 
-//ADDING A NEW POST WITH AUTHENTICATION AND VALIDATION
+//ADDING A NEW COURSE WITH AUTHENTICATION AND VALIDATION
 app.post(
   '/api/courses',
   courseValidation,

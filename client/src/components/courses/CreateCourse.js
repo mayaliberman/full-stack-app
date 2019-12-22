@@ -26,13 +26,14 @@ class CreateCourse extends Component {
       title,
       description,
       estimatedTime,
-      materialsNeeded,
-      user
+      materialsNeeded
     } = this.state;
     const emailAddress = context.authenticatedUser.emailAddress;
     const password = context.authenticatedUser.password;
-    console.log(user, this.state);
-    const course = { title, description, estimatedTime, materialsNeeded, user };
+    const userId = context.authenticatedUser.id;
+    console.log(userId, this.state, context);
+    const course = { title, description, estimatedTime, materialsNeeded, userId };
+    console.log(course)
     if (title === null || description === null) {
       this.setState({
         errors: ['Please add missing title and/or description']
