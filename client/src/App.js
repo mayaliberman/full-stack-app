@@ -32,7 +32,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={CoursesWithContext} />
             <Route path='/courses/create' component={CreateCourseWithContext}/>
-            <Route path='/courses/:id/update' render={props => (<UpdatedCourseWithContext courseId={props.match.params.id}/>)}/>
+            <Route path='/courses/:id/update' render={props => (<UpdatedCourseWithContext {...props} courseId={props.match.params.id}/>)}/>
             <Route exact
               path='/courses/:id'
               render={props => (

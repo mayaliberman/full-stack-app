@@ -34,7 +34,7 @@ class UpdateCourse extends Component {
         [name]: value
       };
     });
-    console.log(this.state);
+    
   };
   submit = () => {
     const { context } = this.props;
@@ -54,9 +54,9 @@ class UpdateCourse extends Component {
       materialsNeeded,
       userId
     };
-    console.log(course);
+console.log(course)
     const password = context.authenticatedUser.password;
-    const signedUserEmailAddress = context.authenticatedUser.emailAddress;
+    
     if (title === null && description === null) {
       this.setState({
         errors: ['Please add missing title and / or description']
@@ -67,18 +67,19 @@ class UpdateCourse extends Component {
         .then(errors => {
           if (errors.length) {
             this.setState({ errors });
-          } else {
+          } 
+          else {
             this.props.history.push('/');
           }
         })
         .catch(err => {
           console.log(err);
-        //   this.props.history.push('/error');
+          this.props.history.push('/error');
         });
     }
   };
   cancel = () => {
-    this.props.history.push('/courses' + this.state.id);
+    this.props.history.push('/');
   };
   render() {
     if (this.state) {
@@ -101,7 +102,7 @@ class UpdateCourse extends Component {
             cancel={this.cancel}
             errors={errors}
             submit={this.submit}
-            submitButtonText='Create Course'
+            submitButtonText='Update Course'
             elements={() => (
               <React.Fragment>
                 <div className='grid-66'>
