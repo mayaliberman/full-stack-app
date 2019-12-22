@@ -31,14 +31,14 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path='/' component={CoursesWithContext} />
+            <Route path='/courses/create' component={CreateCourseWithContext}/>
+            <Route path='/courses/:id/update' render={props => (<UpdatedCourseWithContext courseId={props.match.params.id}/>)}/>
             <Route exact
               path='/courses/:id'
               render={props => (
                 <CourseDetailWithContext courseId={props.match.params.id} />
               )}
             />
-            <Route path='/courses/create' component={CreateCourseWithContext}/>
-            <Route path='/courses/:id/update' render={props => (<UpdatedCourseWithContext courseId={props.match.params.id}/>)}/>
             <Route path='/signin' component={UserSignInWithContext} />
             <Route path='/signup' component={UserSignUpWithContext} />
             <Route path='/signout' component={UserSignOut} />
