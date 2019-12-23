@@ -5,9 +5,15 @@ class CourseDetail extends Component {
     const { context, courseId } = this.props;
     context.data.getSingleCourse(courseId).then(singleCourse => {
       this.setState({
-        singleCourse
+        singleCourse,
+        authenticatedUserId: context.authenticatedUser.id
+       
       });
     });
+
+    console.log('authenticatedUserId', context.authenticatedUser.id)
+    
+    
 
     
   }
@@ -29,16 +35,29 @@ handleDelete = () => {
 };
 
 render() {
-  
+ 
+  console.log(this.state);
   if (this.state) {
     const {
       id,
       title,
       description,
       estimatedTime,
-      materialsNeeded
+      materialsNeeded, 
+      userId
     } = this.state.singleCourse.course;
-    const { firstName, lastName } = this.state.singleCourse.course.User;
+
+    const {authenticatedUserId} = this.state;
+    
+    // if (context.authenticatedUser.id) {
+    //   const {id} = context.authenticatedUser;
+    // } else {
+    //   const id = 'none'
+    // }
+      //  console.log('courseUserId', courseUserId)
+      //  console.log(signedId, 'signedId');
+
+      const { firstName, lastName } = this.state.singleCourse.course.User;
     const splitMaterials =
       materialsNeeded !== null
         ? materialsNeeded
@@ -52,20 +71,23 @@ render() {
           <div className='actions--bar'>
             <div className='bounds'>
               <div className='grid-100'>
-                <span>
-                  <Link className='button' to={`/courses/${id}/update`}>
-                    Update Course
-                  </Link>
-                  <a
-                    className='button'
-                    onClick={() => {
-                      this.handleDelete();
-                    }}
-                    href='/'
-                  >
-                    Delete Course
-                  </a>
-                </span>
+                {(userId === authenticatedUserId) ? (
+                  <span>
+                    <Link className='button' to={`/courses/${id}/update`}>
+                      Update Course
+                    </Link>
+                    <Link
+                      className='button'
+                      onClick={() => {
+                        this.handleDelete();
+                      }}
+                      to='/'
+                    >
+                      Delete Course
+                    </Link>{' '}
+                  </span>) : (<span></span>)
+                }
+
                 <Link className='button button-secondary' to='/'>
                   Return to List
                 </Link>

@@ -13,28 +13,22 @@ export class Provider extends Component {
   state = {
     authenticatedUser: Cookies.getJSON('authenticatedUser') || null
   };
-
+  //USER AUTHENTICATION METHODS
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
     if (user !== null) {
       user.password = password;
-      
-      
       this.setState(() => {
         return { authenticatedUser: user };
       });
       const cookieOptions = {
         expires: 1
       };
-      Cookies.set('authenticatedUser', JSON.stringify(user), 
-        cookieOptions
-      );
+      Cookies.set('authenticatedUser', JSON.stringify(user), cookieOptions);
     }
-    
+
     return user;
   };
-
-  
 
   signOut = () => {
     this.setState({ authenticatedUser: null });
@@ -51,14 +45,14 @@ export class Provider extends Component {
         signOut: this.signOut
       }
     };
-    
+
     return (
       <Context.Provider value={value}>{this.props.children}</Context.Provider>
     );
   }
 }
 
-export const CourseConsumer = Context.Consumer;
+export const Consumer = Context.Consumer;
 
 /**
  * A higher-order component that wraps the provided component in a Context Consumer component.

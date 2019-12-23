@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header'
+import Header from './components/Header';
 import NotFound from './components/NotFound';
 
 import Courses from './components/courses/Courses';
@@ -14,8 +14,9 @@ import UserSignOut from './components/users/UserSignOut';
 import UserSignUp from './components/users/UserSignUp';
 
 import withContext from './Context';
+import PrivateRoute from './PrivateRoute';
 
-const HeaderwithContext = withContext(Header)
+const HeaderwithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
@@ -28,13 +29,22 @@ class App extends Component {
   render() {
     return (
       <Router>
-      <HeaderwithContext />
+        <HeaderwithContext />
         <div>
           <Switch>
             <Route exact path='/' component={CoursesWithContext} />
-            <Route path='/courses/create' component={CreateCourseWithContext}/>
-            <Route path='/courses/:id/update' render={props => (<UpdatedCourseWithContext {...props} courseId={props.match.params.id}/>)}/>
-            <Route exact
+            <PrivateRoute path='/courses/create' component={CreateCourseWithContext} />
+            <PrivateRoute
+              path='/courses/:id/update'
+              render={props => (
+                <UpdatedCourseWithContext
+                  {...props}
+                  courseId={props.match.params.id}
+                />
+              )}
+            />
+            <Route
+              exact
               path='/courses/:id'
               render={props => (
                 <CourseDetailWithContext courseId={props.match.params.id} />
@@ -48,7 +58,6 @@ class App extends Component {
         </div>
       </Router>
     );
-
   }
 }
 
