@@ -11,12 +11,12 @@ class UpdateCourse extends Component {
     errors: []
   };
   componentDidMount() {
-    const { context, courseId } = this.props;
+    const { context } = this.props;
     context.data
-      .getSingleCourse(courseId)
+      .getSingleCourse(this.props.match.params.id)
       .then(singleCourse => {
         this.setState({
-          id: courseId,
+          id: this.props.match.params.id,
           title: singleCourse.course.title,
           description: singleCourse.course.description,
           estimatedTime: singleCourse.course.estimatedTime,

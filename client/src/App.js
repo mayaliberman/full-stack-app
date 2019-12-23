@@ -35,6 +35,13 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path='/' component={CoursesWithContext} />
+            <PrivateRoute path='/courses/create' component={CreateCourseWithContext} />
+            <PrivateRoute
+              path='/courses/:id/update'
+              component={                
+               UpdatedCourseWithContext
+              }
+             />
             <Route
               exact
               path='/courses/:id'
@@ -42,25 +49,9 @@ class App extends Component {
                 <CourseDetailWithContext courseId={props.match.params.id} />
               )}
             />
-            <PrivateRoute
-              path='/courses/:id/update'
-              component={UpdatedCourseWithContext}
-              // render={props => (
-              //   <UpdatedCourseWithContext
-              //     {...props}
-                  // courseId={props.match.params.id}
-              //   />
-              // )
-              // }
-            />
-
             <Route path='/signin' component={UserSignInWithContext} />
             <Route path='/signup' component={UserSignUpWithContext} />
             <Route path='/signout' component={UserSignOutWithContext} />
-            <Route
-              path='/courses/create'
-              component={CreateCourseWithContext}
-            />
             <Route path='/notfound' component={NotFound} />
             <Route path='/forbidden' component={Forbidden} />
             <Route path='/error' component={UnhandledError} />
