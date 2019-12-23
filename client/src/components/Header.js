@@ -29,7 +29,7 @@ class Header extends Component {
                 Welcome {this.props.context.authenticatedUser.firstName}{' '}
                 {this.props.context.authenticatedUser.lastName}
               </span>
-              <Link className='signout' to='/'>
+              <Link className='signout' to='/signout'>
                 Sign Out
               </Link>
             </nav>

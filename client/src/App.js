@@ -21,7 +21,8 @@ const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
 const UpdatedCourseWithContext = withContext(UpdateCourse);
 const UserSignUpWithContext = withContext(UserSignUp);
-const UserSignInWithContext = withContext(UserSignIn)
+const UserSignInWithContext = withContext(UserSignIn);
+const UserSignOutWithContext = withContext(UserSignOut);
 
 class App extends Component {
   render() {
@@ -41,7 +42,7 @@ class App extends Component {
             />
             <Route path='/signin' component={UserSignInWithContext} />
             <Route path='/signup' component={UserSignUpWithContext} />
-            <Route path='/signout' component={UserSignOut} />
+            <Route path='/signout' component={UserSignOutWithContext} />
             <Route component={NotFound} />
           </Switch>
         </div>
