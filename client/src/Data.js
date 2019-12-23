@@ -100,9 +100,9 @@ export default class Data {
       { emailAddress, password }
     );
     if (response.status === 204) {
-      return null;
+      return [];
     } else if (response.status === 403) {
-      return null;
+      return [];
     } else {
       throw new Error();
     }
