@@ -38,6 +38,7 @@ class UpdateCourse extends Component {
   };
   submit = () => {
     const { context } = this.props;
+    const signedId = context.authenticatedUser.id;
     const {
       title,
       description,
@@ -54,29 +55,32 @@ class UpdateCourse extends Component {
       materialsNeeded,
       userId
     };
-console.log(course)
+
     const password = context.authenticatedUser.password;
     
     if (title === null && description === null) {
       this.setState({
         errors: ['Please add missing title and / or description']
       });}
-     else {
-      context.data
-        .updateCourse(id, emailAddress, password, course)
-        .then(errors => {
-          if (errors.length) {
-            this.setState({ errors });
-          } 
-          else {
-            this.props.history.push('/');
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.props.history.push('/error');
+      else if (userId !== signedId) {
+        this.setState({
+          errors: ['You are not authorized to update this course']
         });
-    }
+      } else {
+        context.data
+          .updateCourse(id, emailAddress, password, course)
+          .then(errors => {
+            if (errors.length) {
+              this.setState({ errors });
+            } else {
+              this.props.history.push(`/courses/${id}`);
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            this.props.history.push('/error');
+          });
+      }
   };
   cancel = () => {
     this.props.history.push('/');
@@ -85,12 +89,10 @@ console.log(course)
     if (this.state) {
       const {
         errors,
-        id,
         title,
         description,
         estimatedTime,
         materialsNeeded,
-        userId,
         firstName,
         lastName
       } = this.state;
