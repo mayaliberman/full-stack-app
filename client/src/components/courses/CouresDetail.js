@@ -70,15 +70,13 @@ class CourseDetail extends Component {
                       <Link className='button' to={`/courses/${id}/update`}>
                         Update Course
                       </Link>
-                      <Link
-                        className='button'
-                        onClick={() => {
+                      <a
+                        className='button' onClick=
+                        {() => {
                           this.handleDelete();
                         }}
-                        to='/'
-                      >
-                        Delete Course
-                      </Link>{' '}
+                        href='/' > Delete Course
+                      </a>
                     </span>
                   ) : (
                     <span></span>
@@ -117,7 +115,7 @@ class CourseDetail extends Component {
                   <li className='course--stats--list--item'>
                     <h4>Materials Needed</h4>
                     <ul>
-                    {/* <ReactMarkdown
+                      {/* <ReactMarkdown
                       source={materialsNeeded}
                       renderers={{listItem: <li>{materialsNeeded}</li>}}
                     /> */}

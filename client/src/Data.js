@@ -43,6 +43,11 @@ export default class Data {
     const response = await this.api(`/api/courses/${id}`, 'GET', null);
     if (response.status === 200) {
       return response.json();
+    } else if (response.status === 404) {
+      return response.json(data => {
+        console.log(data);
+        return data.errors;
+      });
     } else {
       console.error(response.status, id);
       throw new Error();
@@ -71,11 +76,9 @@ export default class Data {
       emailAddress,
       password
     });
-    if(response.status === 204) {
-     return []
-      
-     
-    } else if(response.status === 400) {
+    if (response.status === 204) {
+      return [];
+    } else if (response.status === 400) {
       return response.json().then(data => {
         console.log(data);
         return data.errors;
@@ -86,8 +89,7 @@ export default class Data {
         return data.errors;
       });
     } else {
-      throw new Error ()
-
+      throw new Error();
     }
   }
 
@@ -120,7 +122,6 @@ export default class Data {
     } else if (response.status === 401) {
       return null;
     } else {
-      
       throw new Error();
     }
   }
