@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { ReactMarkdown } from 'react-markdown';
+const ReactMarkdown = require('react-markdown');
 class CourseDetail extends Component {
   componentDidMount() {
     const { context, courseId } = this.props;
-    context.data.getSingleCourse(courseId).then(singleCourse => {
-      this.setState({
-        singleCourse,
-        authenticatedUserId: context.authenticatedUser.id
+    context.data
+      .getSingleCourse(courseId)
+      .then(singleCourse => {
+        this.setState({
+          singleCourse,
+          authenticatedUserId: context.authenticatedUser.id || ''
+        });
       });
-    });
+      // this.setState({authenticatedUserId: context.authenticatedUser.id});
+      // .catch(err => {
+      //   console.log(err);
+      //   // this.context.history.push('/notfound');
+      // });
   }
 
   handleDelete = () => {
@@ -26,18 +33,17 @@ class CourseDetail extends Component {
             this.setState({ errors });
           } else {
             this.props.history.push('/');
-            console.log(this.props.history)
+            console.log(this.props.history);
           }
         })
         .catch(err => {
           console.log(err);
-          this.props.history.push('/error')
-        })
+          // this.props.history.push('/notfound');
+        });
     }
   };
 
   render() {
-    
     if (this.state) {
       const {
         id,
@@ -47,17 +53,9 @@ class CourseDetail extends Component {
         materialsNeeded,
         userId
       } = this.state.singleCourse.course;
-console.log(description)
-      const { authenticatedUserId } = this.state;
 
+      const { authenticatedUserId } = this.state;
       const { firstName, lastName } = this.state.singleCourse.course.User;
-      const splitMaterials =
-        materialsNeeded !== null
-          ? materialsNeeded
-              .slice(1)
-              .split('*')
-              .map((material, index) => <li key={index}>{material}</li>)
-          : '';
       return (
         <div>
           <div>
@@ -101,7 +99,7 @@ console.log(description)
               </div>
 
               <div className='course--description'>
-               <ReactMarkdown source={description}/>
+                <ReactMarkdown source={description} />
               </div>
             </div>
 
@@ -115,8 +113,12 @@ console.log(description)
 
                   <li className='course--stats--list--item'>
                     <h4>Materials Needed</h4>
-
-                    <ul>{splitMaterials}</ul>
+                    <ul>
+                    {/* <ReactMarkdown
+                      source={materialsNeeded}
+                      renderers={{listItem: <li>{materialsNeeded}</li>}}
+                    /> */}
+                    </ul>
                   </li>
                 </ul>
               </div>

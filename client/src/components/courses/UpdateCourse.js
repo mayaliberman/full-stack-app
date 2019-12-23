@@ -12,19 +12,25 @@ class UpdateCourse extends Component {
   };
   componentDidMount() {
     const { context, courseId } = this.props;
-    context.data.getSingleCourse(courseId).then(singleCourse => {
-      this.setState({
-        id: courseId,
-        title: singleCourse.course.title,
-        description: singleCourse.course.description,
-        estimatedTime: singleCourse.course.estimatedTime,
-        materialsNeeded: singleCourse.course.materialsNeeded,
-        userId: singleCourse.course.userId,
-        firstName: singleCourse.course.User.firstName,
-        lastName: singleCourse.course.User.lastName,
-        emailAddress: singleCourse.course.User.emailAddress
+    context.data
+      .getSingleCourse(courseId)
+      .then(singleCourse => {
+        this.setState({
+          id: courseId,
+          title: singleCourse.course.title,
+          description: singleCourse.course.description,
+          estimatedTime: singleCourse.course.estimatedTime,
+          materialsNeeded: singleCourse.course.materialsNeeded,
+          userId: singleCourse.course.userId,
+          firstName: singleCourse.course.User.firstName,
+          lastName: singleCourse.course.User.lastName,
+          emailAddress: singleCourse.course.User.emailAddress
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        // this.context.history.push('/notfound');
       });
-    });
   }
   change = event => {
     const name = event.target.name;
@@ -34,7 +40,6 @@ class UpdateCourse extends Component {
         [name]: value
       };
     });
-    
   };
   submit = () => {
     const { context } = this.props;
@@ -57,30 +62,30 @@ class UpdateCourse extends Component {
     };
 
     const password = context.authenticatedUser.password;
-    
+
     if (title === null && description === null) {
       this.setState({
         errors: ['Please add missing title and / or description']
-      });}
-      else if (userId !== signedId) {
-        this.setState({
-          errors: ['You are not authorized to update this course']
+      });
+    } else if (userId !== signedId) {
+      this.setState({
+        errors: ['You are not authorized to update this course']
+      });
+    } else {
+      context.data
+        .updateCourse(id, emailAddress, password, course)
+        .then(errors => {
+          if (errors.length) {
+            this.setState({ errors });
+          } else {
+            this.props.history.push(`/courses/${id}`);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.history.push('/error');
         });
-      } else {
-        context.data
-          .updateCourse(id, emailAddress, password, course)
-          .then(errors => {
-            if (errors.length) {
-              this.setState({ errors });
-            } else {
-              this.props.history.push(`/courses/${id}`);
-            }
-          })
-          .catch(err => {
-            console.log(err);
-            this.props.history.push('/error');
-          });
-      }
+    }
   };
   cancel = () => {
     this.props.history.push('/');
