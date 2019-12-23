@@ -4,19 +4,22 @@ const ReactMarkdown = require('react-markdown');
 class CourseDetail extends Component {
   componentDidMount() {
     const { context, courseId } = this.props;
+    console.log('authenticatedUSer',context.authenticatedUser);
     context.data
       .getSingleCourse(courseId)
       .then(singleCourse => {
-        this.setState({
-          singleCourse,
-          authenticatedUserId: context.authenticatedUser.id || ''
-        });
+        if (context.authenticatedUser !== null) {
+          this.setState({
+            singleCourse,
+            authenticatedUserId: context.authenticatedUser.id 
+          });
+        } else {
+          this.setState({
+            singleCourse
+           });
+        }
       });
-      // this.setState({authenticatedUserId: context.authenticatedUser.id});
-      // .catch(err => {
-      //   console.log(err);
-      //   // this.context.history.push('/notfound');
-      // });
+      
   }
 
   handleDelete = () => {
