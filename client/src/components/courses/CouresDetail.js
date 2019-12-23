@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { ReactMarkdown } from 'react-markdown';
 class CourseDetail extends Component {
   componentDidMount() {
     const { context, courseId } = this.props;
@@ -47,7 +47,7 @@ class CourseDetail extends Component {
         materialsNeeded,
         userId
       } = this.state.singleCourse.course;
-
+console.log(description)
       const { authenticatedUserId } = this.state;
 
       const { firstName, lastName } = this.state.singleCourse.course.User;
@@ -101,7 +101,7 @@ class CourseDetail extends Component {
               </div>
 
               <div className='course--description'>
-                <p>{description}</p>
+               <ReactMarkdown source={description}/>
               </div>
             </div>
 
