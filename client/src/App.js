@@ -46,7 +46,7 @@ class App extends Component {
               exact
               path='/courses/:id'
               render={props => (
-                <CourseDetailWithContext courseId={props.match.params.id} />
+                <CourseDetailWithContext {...props} courseId={props.match.params.id} />
               )}
             />
             <Route path='/signin' component={UserSignInWithContext} />
@@ -55,7 +55,7 @@ class App extends Component {
             <Route path='/notfound' component={NotFound} />
             <Route path='/forbidden' component={Forbidden} />
             <Route path='/error' component={UnhandledError} />
-            <Route component={UnhandledError} />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </Router>

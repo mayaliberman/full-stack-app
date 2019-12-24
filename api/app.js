@@ -166,7 +166,9 @@ app.get(
       res.json({ course });
       res.status(200);
     } else {
-      res.status(500).json({ message: err });
+      res.location('/error')
+      res.status(500)
+      .json({ message: err });
     }
   })
 );
@@ -189,7 +191,9 @@ app.get(
       res.json({ course });
       res.status(200);
     } else {
-      res.status(404).json({ message: 'page not found' });
+      res.status(404)
+      // .end();
+      // .json({ message: 'page not found' });
     }
   })
 );
@@ -203,7 +207,8 @@ app.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map(error => error.msg);
-      res.status(400).json({ errors: errorMessages });
+      res.status(400)
+      .json({ errors: errorMessages });
     } else {
       const course = req.body;
       const newCourse = await models.Course.create(course);
@@ -211,7 +216,8 @@ app.post(
         res.location(`/api/courses/${newCourse.id}`);
         return res.status(201).end();
       } else {
-        res.status(400).json({ message: err });
+        res.status(400)
+        .json({ message: err });
       }
     }
   })

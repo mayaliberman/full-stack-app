@@ -4,22 +4,32 @@ const ReactMarkdown = require('react-markdown');
 class CourseDetail extends Component {
   componentDidMount() {
     const { context, courseId } = this.props;
-    console.log('authenticatedUSer',context.authenticatedUser);
     context.data
       .getSingleCourse(courseId)
       .then(singleCourse => {
+        
+        if(singleCourse.course.title === '') {
+          this.props.history.push('/notfound')
+        }
         if (context.authenticatedUser !== null) {
           this.setState({
             singleCourse,
-            authenticatedUserId: context.authenticatedUser.id 
+            authenticatedUserId: context.authenticatedUser.id
           });
-        } else {
+        } else if (context.authenticatedUser === null) {
           this.setState({
             singleCourse
-           });
+          });
+        } else {
+          this.props.history.push('/notfound');
+
         }
+        console.log(this.props);
+      })
+      .catch(err => {
+        console.log(err);
+         this.props.history.push('/notfound');
       });
-      
   }
 
   handleDelete = () => {
@@ -71,11 +81,14 @@ class CourseDetail extends Component {
                         Update Course
                       </Link>
                       <a
-                        className='button' onClick=
-                        {() => {
+                        className='button'
+                        onClick={() => {
                           this.handleDelete();
                         }}
-                        href='/' > Delete Course
+                        href='/'
+                      >
+                        {' '}
+                        Delete Course
                       </a>
                     </span>
                   ) : (

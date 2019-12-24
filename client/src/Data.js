@@ -44,10 +44,12 @@ export default class Data {
     if (response.status === 200) {
       return response.json();
     } else if (response.status === 404) {
-      return response.json(data => {
-        console.log(data);
-        return data.errors;
-      });
+      // return response.json(data => {
+      //   console.log(data);
+      //   return data.errors;
+      // }
+      // );
+      return null;
     } else {
       console.error(response.status, id);
       throw new Error();

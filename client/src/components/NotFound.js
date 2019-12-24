@@ -4,7 +4,7 @@ const NotFound = () => {
     return (
       <div className='bounds'>
         <h1>Error</h1>
-        <p>Sorry! We just encountered an unexpected error.</p>
+        <p>Sorry! The page you are looking for is not exists.</p>
         <Link className='button button-secondary' to='/'>
           Return to List
         </Link>

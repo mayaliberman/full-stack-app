@@ -12,25 +12,40 @@ class UpdateCourse extends Component {
   };
   componentDidMount() {
     const { context } = this.props;
+    console.log(this.props.match.url);
     context.data
       .getSingleCourse(this.props.match.params.id)
       .then(singleCourse => {
-        this.setState({
-          id: this.props.match.params.id,
-          title: singleCourse.course.title,
-          description: singleCourse.course.description,
-          estimatedTime: singleCourse.course.estimatedTime,
-          materialsNeeded: singleCourse.course.materialsNeeded,
-          userId: singleCourse.course.userId,
-          firstName: singleCourse.course.User.firstName,
-          lastName: singleCourse.course.User.lastName,
-          emailAddress: singleCourse.course.User.emailAddress
-        });
+        if (context.authenticatedUser.id !== singleCourse.course.userId) {
+          console.log('userId of course', singleCourse.course.userId);
+          this.props.history.push('/forbidden');
+        } 
+        
+       else if(singleCourse.course.userId === null) {
+ this.props.history.push('/notfound');
+        }
+        else {
+          this.setState({
+            id: this.props.match.params.id,
+            title: singleCourse.course.title,
+            description: singleCourse.course.description,
+            estimatedTime: singleCourse.course.estimatedTime,
+            materialsNeeded: singleCourse.course.materialsNeeded,
+            userId: singleCourse.course.userId,
+            firstName: singleCourse.course.User.firstName,
+            lastName: singleCourse.course.User.lastName,
+            emailAddress: singleCourse.course.User.emailAddress
+          });
+        }
       })
       .catch(err => {
         console.log(err);
-        // this.context.history.push('/notfound');
+        this.props.history.push('/notfound');
       });
+
+    //  if (this.state.description === '') {
+    //           this.props.history.push('/notfound');
+    //         }
   }
   change = event => {
     const name = event.target.name;
@@ -41,6 +56,7 @@ class UpdateCourse extends Component {
       };
     });
   };
+
   submit = () => {
     const { context } = this.props;
     const signedId = context.authenticatedUser.id;
@@ -68,9 +84,7 @@ class UpdateCourse extends Component {
         errors: ['Please add missing title and / or description']
       });
     } else if (userId !== signedId) {
-      this.setState({
-        errors: ['You are not authorized to update this course']
-      });
+      this.props.history.push(`/forbidden`);
     } else {
       context.data
         .updateCourse(id, emailAddress, password, course)
@@ -101,7 +115,7 @@ class UpdateCourse extends Component {
         firstName,
         lastName
       } = this.state;
-
+console.log(this.state)
       return (
         <div className='bounds course--detail'>
           <h1>Update course</h1>
