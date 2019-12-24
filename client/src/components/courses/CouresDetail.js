@@ -7,9 +7,8 @@ class CourseDetail extends Component {
     context.data
       .getSingleCourse(courseId)
       .then(singleCourse => {
-        
-        if(singleCourse.course.title === '') {
-          this.props.history.push('/notfound')
+        if (singleCourse.course.title === '') {
+          this.props.history.push('/notfound');
         }
         if (context.authenticatedUser !== null) {
           this.setState({
@@ -22,13 +21,12 @@ class CourseDetail extends Component {
           });
         } else {
           this.props.history.push('/notfound');
-
         }
         console.log(this.props);
       })
       .catch(err => {
         console.log(err);
-         this.props.history.push('/notfound');
+        this.props.history.push('/notfound');
       });
   }
 
@@ -66,7 +64,7 @@ class CourseDetail extends Component {
         materialsNeeded,
         userId
       } = this.state.singleCourse.course;
-
+      console.log(materialsNeeded);
       const { authenticatedUserId } = this.state;
       const { firstName, lastName } = this.state.singleCourse.course.User;
       return (
@@ -127,12 +125,7 @@ class CourseDetail extends Component {
 
                   <li className='course--stats--list--item'>
                     <h4>Materials Needed</h4>
-                    <ul>
-                      {/* <ReactMarkdown
-                      source={materialsNeeded}
-                      renderers={{listItem: <li>{materialsNeeded}</li>}}
-                    /> */}
-                    </ul>
+                    <ReactMarkdown source={materialsNeeded} />
                   </li>
                 </ul>
               </div>
