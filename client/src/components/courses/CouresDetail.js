@@ -22,10 +22,10 @@ class CourseDetail extends Component {
         } else {
           this.props.history.push('/notfound');
         }
-        console.log(this.props);
+        
       })
       .catch(err => {
-        console.log(err);
+       
         this.props.history.push('/notfound');
       });
   }
@@ -44,12 +44,12 @@ class CourseDetail extends Component {
             this.setState({ errors });
           } else {
             this.props.history.push('/');
-            console.log(this.props.history);
+            
           }
         })
         .catch(err => {
           console.log(err);
-          // this.props.history.push('/notfound');
+          this.props.history.push('/notfound');
         });
     }
   };
@@ -64,7 +64,7 @@ class CourseDetail extends Component {
         materialsNeeded,
         userId
       } = this.state.singleCourse.course;
-      console.log(materialsNeeded);
+      
       const { authenticatedUserId } = this.state;
       const { firstName, lastName } = this.state.singleCourse.course.User;
       return (

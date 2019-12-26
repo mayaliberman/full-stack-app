@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Header extends Component {
   render() {
-    // const firstName = this.props.context.authenticatedUser.firstName;
-    // const lastName = this.props.context.authenticatedUser.lastName;
-    // console.log(firstName, lastName);
-
+    
     return (
       <div className='header'>
         <div className='bounds'>
@@ -19,7 +16,10 @@ class Header extends Component {
               <Link className='signup' to='/signup'>
                 Sign Up
               </Link>
-              <Link className='signin' to='/signin'>
+              <Link
+                className='signin'
+                to='/signin' 
+              >
                 Sign In
               </Link>
             </nav>
@@ -41,33 +41,4 @@ class Header extends Component {
 }
 
 export default Header;
-// }
 
-// return (
-// <div className='header'>
-//     <div className='bounds'>
-//     <h1 className='header--logo'>Courses</h1>
-
-//     {firstName === null && lastName === null ? (
-//         <nav>
-//         <Link className='signup' to='/signup'>
-//             Sign Up
-//         </Link>
-//         <Link className='signin' href='/signin'>
-//             Sign In
-//         </Link>
-//         </nav>
-//     ) : (
-//         <nav>
-//         <span>
-//             Welcome {firstName} {lastName}
-//         </span>
-//         <Link className='signout' to='/'>
-//             Sign Out
-//         </Link>
-//         </nav>
-//     )}
-//     </div>
-// </div>
-// );
-// }

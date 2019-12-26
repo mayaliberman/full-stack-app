@@ -24,8 +24,10 @@ class UserSignIn extends Component {
   submit = () => {
     const { context } = this.props;
     const { from } = this.props.location.state || {
-      from: { pathname: '/' }
+      from: { pathname: `/` }
     };
+    
+    
     const { emailAddress, password } = this.state;
     context.actions
       .signIn(emailAddress, password)
@@ -48,6 +50,7 @@ class UserSignIn extends Component {
   };
   render() {
     const { emailAddress, password, errors } = this.state;
+   
     return (
       <div className='bounds'>
         <div className='grid-33 centered signin'>
