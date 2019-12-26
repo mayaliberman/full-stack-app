@@ -191,9 +191,8 @@ app.get(
       res.json({ course });
       res.status(200);
     } else {
-      res.status(404)
-      // .end();
-      // .json({ message: 'page not found' });
+      res.status(404).end();
+     
     }
   })
 );
