@@ -27,6 +27,9 @@ const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
 
+//The App component is incharge on the routers of the application.
+//Enabled private routers as well as public routers to be shown.
+
 class App extends Component {
   render() {
     return (
@@ -35,18 +38,22 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path='/' component={CoursesWithContext} />
-            <PrivateRoute path='/courses/create' component={CreateCourseWithContext} />
+            <PrivateRoute
+              path='/courses/create'
+              component={CreateCourseWithContext}
+            />
             <PrivateRoute
               path='/courses/:id/update'
-              component={                
-               UpdatedCourseWithContext
-              }
-             />
+              component={UpdatedCourseWithContext}
+            />
             <Route
               exact
               path='/courses/:id'
               render={props => (
-                <CourseDetailWithContext {...props} courseId={props.match.params.id} />
+                <CourseDetailWithContext
+                  {...props}
+                  courseId={props.match.params.id}
+                />
               )}
             />
             <Route path='/signin' component={UserSignInWithContext} />

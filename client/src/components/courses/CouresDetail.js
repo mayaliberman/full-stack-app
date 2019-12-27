@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 const ReactMarkdown = require('react-markdown');
 class CourseDetail extends Component {
+  //When the component mount the getSingleCourse method will be activated with the course id.
   componentDidMount() {
     const { context, courseId } = this.props;
     context.data
       .getSingleCourse(courseId)
       .then(singleCourse => {
+        //If the title contains an emtpy string it means there is no courses content which will direct to the not found page.
         if (singleCourse.course.title === '') {
           this.props.history.push('/notfound');
         }
+
+        //If a user is logged in, the state will be updated with the authenticated user id.
         if (context.authenticatedUser !== null) {
           this.setState({
             singleCourse,
@@ -22,14 +26,14 @@ class CourseDetail extends Component {
         } else {
           this.props.history.push('/notfound');
         }
-        
       })
       .catch(err => {
-       
         this.props.history.push('/notfound');
       });
   }
 
+  //This method will check if the course owner is identical with the loged authenticated user.
+  // If confirmed, it will enable the user to delete the course.
   handleDelete = () => {
     const { context, courseId } = this.props;
     const { authenticatedUser } = context;
@@ -43,14 +47,12 @@ class CourseDetail extends Component {
           if (errors.length) {
             this.setState({ errors });
           } else {
-             
             this.props.history.push('/');
-            
           }
         })
         .catch(err => {
           console.log(err);
-         
+
           this.props.history.push('/notfound');
         });
     }
@@ -66,7 +68,7 @@ class CourseDetail extends Component {
         materialsNeeded,
         userId
       } = this.state.singleCourse.course;
-      
+
       const { authenticatedUserId } = this.state;
       const { firstName, lastName } = this.state.singleCourse.course.User;
       return (
@@ -75,6 +77,7 @@ class CourseDetail extends Component {
             <div className='actions--bar'>
               <div className='bounds'>
                 <div className='grid-100'>
+                  {/* If user is authenticated the delete and updated button will be rendered */}
                   {userId === authenticatedUserId ? (
                     <span>
                       <Link className='button' to={`/courses/${id}/update`}>

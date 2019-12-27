@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+//This component will be render when status 403 will be active.
 const Forbidden = () => {
   return (
     <div className='bounds'>

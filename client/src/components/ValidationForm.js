@@ -1,6 +1,9 @@
  import React from 'react';
 
-const Form = (props) => {
+
+ //This stateless component ensures that all the inputs in the form accross the application is validated.
+ //If not, and there are errors, it will render the errors.
+const ValidationForm = (props) => {
     const {cancel, errors, submit, submitButtonText, elements} = props;
 
     const handleSubmit = (event) => {
@@ -50,4 +53,4 @@ return (
 );
 }
 
-export default Form;
+export default ValidationForm;

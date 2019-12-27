@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+//This component is for status 500 rendering
 const UnhandledError = () => {
   return (
     <div className='bounds'>

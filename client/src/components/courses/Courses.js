@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import NewCourseButton from './NewCourseButton';
 
+//This component will render the list of all courses in the database.
+
 class Courses extends Component {
   componentDidMount() {
     const { context } = this.props;
@@ -11,10 +13,8 @@ class Courses extends Component {
     });
   }
   render() {
-    
     return (
       <div className='bounds'>
-      
         {this.state === null ? (
           <h1>Loading...</h1>
         ) : (
@@ -23,7 +23,7 @@ class Courses extends Component {
               <div className='grid-33' key={course.id}>
                 <a
                   className='course--module course--link'
-                  href={'/courses/' +course.id}
+                  href={'/courses/' + course.id}
                 >
                   <h4 className='course--label'>Course</h4>
                   <h3 className='course--title'>{course.title}</h3>
@@ -38,6 +38,5 @@ class Courses extends Component {
     );
   }
 }
-
 
 export default Courses;

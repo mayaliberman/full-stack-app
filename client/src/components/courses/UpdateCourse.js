@@ -10,21 +10,23 @@ class UpdateCourse extends Component {
     userId: null,
     errors: []
   };
+
+  //When component is mounted the getCourse method is rendered accoring to the course id.
   componentDidMount() {
     const { context } = this.props;
-    console.log(this.props.match.url);
+
     context.data
       .getSingleCourse(this.props.match.params.id)
       .then(singleCourse => {
+        //if the user id is not similar to the course user id it will route the user to
         if (context.authenticatedUser.id !== singleCourse.course.userId) {
           console.log('userId of course', singleCourse.course.userId);
           this.props.history.push('/forbidden');
-        } 
-        
-       else if(singleCourse.course.userId === null) {
- this.props.history.push('/notfound');
         }
-        else {
+        //If there is not existed userId in the course, it will render not found page
+        else if (singleCourse.course.userId === null) {
+          this.props.history.push('/notfound');
+        } else {
           this.setState({
             id: this.props.match.params.id,
             title: singleCourse.course.title,
@@ -34,8 +36,7 @@ class UpdateCourse extends Component {
             userId: singleCourse.course.userId,
             firstName: singleCourse.course.User.firstName,
             lastName: singleCourse.course.User.lastName,
-            emailAddress: singleCourse.course.User.emailAddress,
-           
+            emailAddress: singleCourse.course.User.emailAddress
           });
         }
       })
@@ -43,11 +44,9 @@ class UpdateCourse extends Component {
         console.log(err);
         this.props.history.push('/notfound');
       });
-
-    //  if (this.state.description === '') {
-    //           this.props.history.push('/notfound');
-    //         }
   }
+
+  //On change of input the state will be updated
   change = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -57,7 +56,7 @@ class UpdateCourse extends Component {
       };
     });
   };
-
+  //On submitting the course the state will be updated.
   submit = () => {
     const { context } = this.props;
     const signedId = context.authenticatedUser.id;
@@ -87,6 +86,8 @@ class UpdateCourse extends Component {
     } else if (userId !== signedId) {
       this.props.history.push(`/forbidden`);
     } else {
+      //If the information is legitimate (the userId is the same as the authenticated
+      // and there is title and description) the upatedCourse method will be called.
       context.data
         .updateCourse(id, emailAddress, password, course)
         .then(errors => {
@@ -102,8 +103,10 @@ class UpdateCourse extends Component {
         });
     }
   };
+
+  //pushing the cancel button will bring back to the course detail page.
   cancel = () => {
-    console.log(this.state)
+    console.log(this.state);
     this.props.history.push(`/courses/${this.state.id}`);
   };
   render() {
@@ -117,7 +120,7 @@ class UpdateCourse extends Component {
         firstName,
         lastName
       } = this.state;
-console.log(this.state)
+
       return (
         <div className='bounds course--detail'>
           <h1>Update course</h1>

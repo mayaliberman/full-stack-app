@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ValidationForm from '../ValidationForm';
+
+//This component creates a new course if the user is authenticated.
 class CreateCourse extends Component {
   state = {
     title: '',
@@ -9,6 +11,7 @@ class CreateCourse extends Component {
     errors: []
   };
 
+  //This method tracks the change of the input and update the state.
   change = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -17,28 +20,29 @@ class CreateCourse extends Component {
         [name]: value
       };
     });
-    
   };
-
+  //On submitting the course it will update the state
   submit = () => {
     const { context } = this.props;
-    const {
-      title,
-      description,
-      estimatedTime,
-      materialsNeeded
-    } = this.state;
+    const { title, description, estimatedTime, materialsNeeded } = this.state;
     const emailAddress = context.authenticatedUser.emailAddress;
     const password = context.authenticatedUser.password;
     const userId = context.authenticatedUser.id;
-    console.log(userId, this.state, context);
-    const course = { title, description, estimatedTime, materialsNeeded, userId };
-    console.log(course)
+
+    const course = {
+      title,
+      description,
+      estimatedTime,
+      materialsNeeded,
+      userId
+    };
+    //If there is no title and description an error will be rendered.
     if (title === null && description === null) {
       this.setState({
         errors: ['Please add missing title and/or description']
       });
     } else {
+      //In case all the course details are correct, it will ensure the user is authenticated and create the course.
       context.data
         .createCourse(course, emailAddress, password)
         .then(errors => {
@@ -54,6 +58,8 @@ class CreateCourse extends Component {
         });
     }
   };
+
+  //In case of canceling the action user will be directed to the home route.
   cancel = () => {
     this.props.history.push('/');
   };
@@ -70,6 +76,8 @@ class CreateCourse extends Component {
     return (
       <div className='bounds course--detail'>
         <h1>Create Course</h1>
+
+        {/* Updating a form inputs and buttons props using the ValidationForm component */}
         <ValidationForm
           cancel={this.cancel}
           errors={errors}

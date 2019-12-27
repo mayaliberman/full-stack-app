@@ -1,5 +1,7 @@
 import config from './config';
 
+//This class is the connection between the api and the client side. Calling the server with different api methods to the correct routes.
+
 export default class Data {
   api(
     path,
@@ -30,6 +32,8 @@ export default class Data {
     return fetch(url, options);
   }
   //COURSES METHODS
+
+  //Get all courses with no authentication process
   async getCourses() {
     const response = await this.api('/api/courses', 'GET', null);
     if (response.status === 200) {
@@ -38,7 +42,7 @@ export default class Data {
       throw new Error();
     }
   }
-
+  //Get single course with no authentication process
   async getSingleCourse(id) {
     const response = await this.api(`/api/courses/${id}`, 'GET', null);
     if (response.status === 200) {
@@ -50,7 +54,7 @@ export default class Data {
       throw new Error();
     }
   }
-
+  //Creating a course ensuring a sign in user authentication.
   async createCourse(course, emailAddress, password) {
     const response = await this.api(`/api/courses`, 'POST', course, true, {
       emailAddress,
@@ -67,7 +71,7 @@ export default class Data {
       throw new Error();
     }
   }
-
+  //Updating a course with user authentication.
   async updateCourse(id, emailAddress, password, course) {
     const response = await this.api(`/api/courses/${id}`, 'PUT', course, true, {
       emailAddress,
@@ -89,7 +93,7 @@ export default class Data {
       throw new Error();
     }
   }
-
+  //Deleting a course with user authentication.
   async deleteCourse(id, emailAddress, password) {
     const response = await this.api(
       `/api/courses/${id}`,
@@ -108,6 +112,7 @@ export default class Data {
   }
   //USER'S METHODS
 
+  //Getting a user with user authentication.
   async getUser(emailAddress, password) {
     const response = await this.api(`/api/users`, 'GET', null, true, {
       emailAddress,
@@ -122,7 +127,7 @@ export default class Data {
       throw new Error();
     }
   }
-
+  //Creating a user
   async createUser(user) {
     const response = await this.api('/api/users', 'POST', user);
     if (response.status === 201) {

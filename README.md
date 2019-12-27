@@ -1,4 +1,4 @@
-# full-stack-school-administraion
+# Full Stack School Administraion
 
 ## Instroduction
 

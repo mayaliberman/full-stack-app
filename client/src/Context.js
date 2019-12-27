@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Data from './Data';
 import Cookies from 'js-cookie';
 
+
+//This is the state managment component. User the context API. 
+//Having a provide and a consumer which can be used in the entire app.
 const Context = React.createContext();
 
 export class Provider extends Component {

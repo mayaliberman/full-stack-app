@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ValidationForm from '../ValidationForm';
 
+//This component is for user to sign up the application.
 class UserSignUp extends Component {
   state = {
     firstName: '',
@@ -11,6 +12,8 @@ class UserSignUp extends Component {
     confirmPassword: '',
     errors: []
   };
+
+  //On change of the input the state of the component will be updated.
   change = event => {
     const name = event.target.name;
     const value = event.target.value;
@@ -20,6 +23,8 @@ class UserSignUp extends Component {
       };
     });
   };
+
+  //On submitting the sign up form the state will be updated.
   submit = () => {
     const { context } = this.props;
     const {
@@ -29,7 +34,7 @@ class UserSignUp extends Component {
       password,
       confirmPassword
     } = this.state;
-    console.log(password, confirmPassword);
+
     const user = {
       firstName,
       lastName,
@@ -41,6 +46,8 @@ class UserSignUp extends Component {
         errors: ['Your password and confirm passowrd should be the identical']
       });
     } else {
+      //In case the confirm password and password is correct the create user
+      //method will be active and create the user in the database.
       context.data
         .createUser(user)
         .then(errors => {
@@ -75,6 +82,8 @@ class UserSignUp extends Component {
       <div className='bounds'>
         <div className='grid-33 centered signin'>
           <h1>Sign Up</h1>
+
+          {/* Using the validation component will ensure that all the props are correct */}
           <ValidationForm
             cancel={this.cancel}
             errors={errors}
