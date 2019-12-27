@@ -43,12 +43,14 @@ class CourseDetail extends Component {
           if (errors.length) {
             this.setState({ errors });
           } else {
+             
             this.props.history.push('/');
             
           }
         })
         .catch(err => {
           console.log(err);
+         
           this.props.history.push('/notfound');
         });
     }

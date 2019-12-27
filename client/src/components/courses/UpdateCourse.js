@@ -34,7 +34,8 @@ class UpdateCourse extends Component {
             userId: singleCourse.course.userId,
             firstName: singleCourse.course.User.firstName,
             lastName: singleCourse.course.User.lastName,
-            emailAddress: singleCourse.course.User.emailAddress
+            emailAddress: singleCourse.course.User.emailAddress,
+           
           });
         }
       })
@@ -102,7 +103,8 @@ class UpdateCourse extends Component {
     }
   };
   cancel = () => {
-    this.props.history.push('/');
+    console.log(this.state)
+    this.props.history.push(`/courses/${this.state.id}`);
   };
   render() {
     if (this.state) {

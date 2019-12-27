@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-class Header extends Component {
-  render() {
-    
+const  Header = (props)=> {
+const {authenticatedUser} = props.context;
     return (
       <div className='header'>
         <div className='bounds'>
@@ -11,7 +10,7 @@ class Header extends Component {
             <h1 className='header--logo'>Courses</h1>
           </Link>
 
-          {this.props.context.authenticatedUser === null ? (
+          {authenticatedUser === null ? (
             <nav>
               <Link className='signup' to='/signup'>
                 Sign Up
@@ -26,8 +25,8 @@ class Header extends Component {
           ) : (
             <nav>
               <span>
-                Welcome {this.props.context.authenticatedUser.firstName}{' '}
-                {this.props.context.authenticatedUser.lastName}
+                Welcome {authenticatedUser.firstName}{' '}
+                {authenticatedUser.lastName}
               </span>
               <Link className='signout' to='/signout'>
                 Sign Out
@@ -37,7 +36,7 @@ class Header extends Component {
         </div>
       </div>
     );
-  }
+  
 }
 
 export default Header;
