@@ -1,6 +1,6 @@
-# Full Stack School Administraion
+# Full Stack School Administration
 
-## Instroduction
+## Introduction
 
 On this project I created full stack school administration app to manage courses. The  application provides a way for users to administer a school database containing information about courses: users can interact with the database by retrieving a list of courses, viewing detail for a specific course, as well as creating, updating and deleting courses in the database.
 
@@ -37,7 +37,7 @@ npm run seed
 And lastly, start the application.
 
 ```
-run `npm start`
+`npm start`
 ```
 
 To test the Express server, browse to the URL [http://localhost:5000/](http://localhost:5000/).
@@ -56,7 +56,7 @@ npm install
 Start the application.
 
 ```
-run `npm start`
+`npm start`
 ```
 
-The aplicatioin should run in the broweser on [http://localhost:3000].
+The application  should run in the browser  on [http://localhost:3000].

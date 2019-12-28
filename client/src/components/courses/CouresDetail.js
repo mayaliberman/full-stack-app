@@ -19,16 +19,20 @@ class CourseDetail extends Component {
             singleCourse,
             authenticatedUserId: context.authenticatedUser.id
           });
+         
+         
         } else if (context.authenticatedUser === null) {
           this.setState({
             singleCourse
           });
+         
         } else {
           this.props.history.push('/notfound');
         }
       })
       .catch(err => {
-        this.props.history.push('/notfound');
+        console.log(err);
+        this.props.history.push('/error');
       });
   }
 
@@ -46,13 +50,13 @@ class CourseDetail extends Component {
         .then(errors => {
           if (errors.length) {
             this.setState({ errors });
+            
           } else {
             this.props.history.push('/');
           }
         })
         .catch(err => {
           console.log(err);
-
           this.props.history.push('/notfound');
         });
     }

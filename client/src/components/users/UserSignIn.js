@@ -25,7 +25,7 @@ class UserSignIn extends Component {
   //On submitting the sign in form user will be directed to the home route.
   submit = () => {
     const { context } = this.props;
-    const { from } = this.props.location.state || {
+    const { from } = this.props.location.state.referer || {
       from: { pathname: `/` }
     };
 
