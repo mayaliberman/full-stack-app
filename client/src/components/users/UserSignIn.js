@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 import ValidationForm from '../ValidationForm';
 
@@ -25,7 +25,7 @@ class UserSignIn extends Component {
   //On submitting the sign in form user will be directed to the home route.
   submit = () => {
     const { context } = this.props;
-    const { from } = this.props.location.state.referer || {
+    const { from } = this.props.location.state || {
       from: { pathname: `/` }
     };
 
@@ -41,6 +41,7 @@ class UserSignIn extends Component {
           });
         } else {
           this.props.history.push(from);
+          
         }
       })
       .catch(error => {

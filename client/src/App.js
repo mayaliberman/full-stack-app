@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import NotFound from './components/NotFound';
 
@@ -31,8 +31,6 @@ const UserSignOutWithContext = withContext(UserSignOut);
 //Enabled private routers as well as public routers to be shown.
 
 class App extends Component {
-  
-
   
   render() {
     return (
