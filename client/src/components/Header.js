@@ -17,7 +17,7 @@ When logged out the option of log in and sign up is rendered */}
             <Link className='signup' to='/signup'>
               Sign Up
             </Link>
-            <Link className='signin' to='/signin'>
+            <Link className='signin' to={`/signin?return=${encodeURIComponent(window.location.href)}`}>
               Sign In
             </Link>
           </nav>

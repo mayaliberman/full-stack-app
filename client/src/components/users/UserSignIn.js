@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import ValidationForm from '../ValidationForm';
 
@@ -25,9 +25,7 @@ class UserSignIn extends Component {
   //On submitting the sign in form user will be directed to the home route.
   submit = () => {
     const { context } = this.props;
-    const { from } = this.props.location.state || {
-      from: { pathname: `/` }
-    };
+    const { from } = new URL(window.location.href).searchParams.get('return');
 
     //If user added correct password and emailaddress he will be logged in.
     //If password and/or emailAddres are not correct an error message will be rendered.
@@ -40,8 +38,10 @@ class UserSignIn extends Component {
             return { errors: ['Sign-in was unsuccessful'] };
           });
         } else {
-          this.props.history.push(from);
-          
+          this.props.history.push(
+            new URL(new URL(window.location.href).searchParams.get('return'))
+              .pathname
+          );
         }
       })
       .catch(error => {
