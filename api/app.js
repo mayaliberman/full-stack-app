@@ -107,10 +107,7 @@ app.use(cors());
 const path = require('path');
 app.use(express.static(path.join(__dirname, '../client/build')));
 
-//Catch all routes to serve the index.html file from the client build folder
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
+
 ////////API ROUTES/////////
 
 //*****USER ROUTES*******
@@ -286,13 +283,17 @@ app.get('/', (req, res) => {
     message: 'Welcome to the REST API project!'
   });
 });
-
+//Catch all routes to serve the index.html file from the client build folder
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 // send 404 if no other route matched
 app.use((req, res) => {
   res.status(404).json({
     message: 'Route Not Found'
   });
 });
+
 
 // setup a global error handler
 app.use((err, req, res) => {
