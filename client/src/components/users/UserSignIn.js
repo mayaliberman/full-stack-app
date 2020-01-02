@@ -25,7 +25,7 @@ class UserSignIn extends Component {
   //On submitting the sign in form user will be directed to the home route.
   submit = () => {
     const { context } = this.props;
-    const { from } = new URL(window.location.href).searchParams.get('return');
+   
 
     //If user added correct password and emailaddress he will be logged in.
     //If password and/or emailAddres are not correct an error message will be rendered.

@@ -1,0 +1,26 @@
+{
+  "name": "full-stack-app",
+  "version": "1.0.0",
+  "description": "On this project I created full stack school administration app to manage courses. The  application provides a way for users to administer a school database containing information about courses: users can interact with the database by retrieving a list of courses, viewing detail for a specific course, as well as creating, updating and deleting courses in the database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd api && npm install && npm run seed && npm start",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mayaliberman/full-stack-app.git"
+    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mayaliberman/full-stack-app/issues"
+  },
+  "homepage": "https://github.com/mayaliberman/full-stack-app#readme",
+  "engines": {
+    "node": "10.15.3"
+  }
+}

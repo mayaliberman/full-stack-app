@@ -102,6 +102,15 @@ app.use(morgan('dev'));
 
 //CORS support cross-origin resource sharing or CORS
 app.use(cors());
+
+//Request the path API and serve static files from the client build folder
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+//Catch all routes to serve the index.html file from the client build folder
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 ////////API ROUTES/////////
 
 //*****USER ROUTES*******
