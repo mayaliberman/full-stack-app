@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd api && npm install && npm start",
+    "start": "cd api && npm start",
+    "prep-server": "cd api && npm install",
+    "build": "cd client && npm install && npm run build",
     "seed": "cd api && npm run seed",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "npm run build && npm run prep-server"
   },
   "repository": {
     "type": "git",
